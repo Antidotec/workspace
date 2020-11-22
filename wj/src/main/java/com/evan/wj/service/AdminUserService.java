@@ -44,4 +44,16 @@ public class AdminUserService {
     public AdminUser get(String username, String password) {
         return adminUserDAO.getByUsernameAndPassword(username, password);
     }
+
+    public void register(AdminUser user) {
+        adminUserDAO.save(user);
+    }
+
+    public void delUser(int uid) {
+        adminUserDAO.deleteById(uid);
+    }
+
+    public List<AdminUser> search(String keywords) {
+        return adminUserDAO.findAllByUsernameLike("%" + keywords + "%");
+    }
 }

@@ -45,8 +45,9 @@
           <el-input type="hidden" v-model="form.id" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item :label-width="formLabelWidth">
-          <el-button type="primary" @click="onSubmit">上架图书</el-button>
+          <el-button type="primary" @click="onSubmit">在售图书</el-button>
           <el-button type="danger" @click="onSubmit2">预售图书</el-button>
+          <el-button type="info" @click="onSubmit3">添加图书</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -136,7 +137,8 @@
                 abs: this.form.abs,
                 price: this.form.price,
                 category: this.form.category,
-                sale: true
+                sale: true,
+                unshelve:false
               }).then(resp => {
               if (resp && resp.status === 200) {
                 that.clear();
@@ -163,13 +165,42 @@
                 abs: this.form.abs,
                 price: this.form.price,
                 category: this.form.category,
-                sale: false
+                sale: false,
+                unshelve:false
               }).then(resp => {
               if (resp && resp.status === 200) {
                 that.clear();
                 that.$message({
                   type: "success",
                   message: "图书预售成功!"
+                })
+              }
+            })
+          }
+        })
+      },
+      onSubmit3() {
+        var that = this;
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            that.$axios
+              .post('/books', {
+                cover: this.form.cover,
+                title: this.form.title,
+                author: this.form.author,
+                date: this.form.date,
+                press: this.form.press,
+                abs: this.form.abs,
+                price: this.form.price,
+                category: this.form.category,
+                sale: false,
+                unshelve:true
+              }).then(resp => {
+              if (resp && resp.status === 200) {
+                that.clear();
+                that.$message({
+                  type: "success",
+                  message: "图书添加成功!"
                 })
               }
             })

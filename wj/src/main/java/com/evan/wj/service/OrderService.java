@@ -105,4 +105,10 @@ public class OrderService {
         orders.removeIf(o -> !o.isRefund() || o.isFinish());
         return orders;
     }
+
+    public List<Order> search(int id) {
+        List<Order> orders = orderDAO.findAllByUidOrBid(id,id);
+        for (Order o : orders) infoUpdate(o);
+        return orders;
+    }
 }

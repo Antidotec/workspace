@@ -28,6 +28,12 @@ public class AdminController {
 
     @Autowired
     AdminRoleMenuService adminRoleMenuService;
+    @Autowired
+    BookService bookService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    OrderService orderService;
 
     @CrossOrigin
     @GetMapping("/api/menu")
@@ -78,4 +84,55 @@ public class AdminController {
         adminRoleMenuService.updateRoleMenu(rid, menusIds);
     }
 
+    @CrossOrigin
+    @PostMapping("/api/admin/deleteUser")
+    public void deleteUser(@RequestParam("id") int id) {
+        adminUserService.delUser(id);
+    }
+
+    @CrossOrigin
+    @GetMapping("/api/admin/user/search")
+    public List<User> searchUser(@RequestParam("keywords") String keywords) {
+        return userService.search(keywords);
+    }
+
+    @CrossOrigin
+    @GetMapping("/api/admin/book/search")
+    public List<Book> searchBook(@RequestParam("keywords") String keywords) {
+        return bookService.adminSearch(keywords);
+    }
+
+
+    @CrossOrigin
+    @GetMapping("/api/admin/system/search")
+    public List<AdminUser> searchAdminUser(@RequestParam("keywords") String keywords) {
+        return adminUserService.search(keywords);
+    }
+
+    @CrossOrigin
+    @GetMapping("/api/admin/order/search")
+    public List<Order> searchOrder(@RequestParam("keywords") int id) {
+        return orderService.search(id);
+    }
+
+    @CrossOrigin
+    @PostMapping("api/admin/book/unshelve")
+    public void unshelveBook(@RequestParam("id") int id){
+        bookService.unshelveBook(id);
+    }
+    @CrossOrigin
+    @PostMapping("api/admin/book/shelve")
+    public void shelveBook(@RequestParam("id") int id){
+        bookService.shelveBook(id);
+    }
+    @CrossOrigin
+    @PostMapping("api/admin/book/preSell")
+    public void preSellBook(@RequestParam("id") int id){
+        bookService.preSellBook(id);
+    }
+    @CrossOrigin
+    @PostMapping("/api/admin/book/onSale")
+    public void bookOnSale(@RequestParam("id") int id) {
+        bookService.bookOnSale(id);
+    }
 }

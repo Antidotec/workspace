@@ -98,7 +98,7 @@
           date: item.date,
           press: item.press,
           abs: item.abs,
-          price: this.$store.state.user.vip ? (item.price * 0.8).toFixed(2) : item.price, //这里直接处理单价信息
+          price: this.$store.state.user.vip ? (item.price * (10-this.$store.state.user.vip) / 10).toFixed(2) : item.price, //这里直接处理单价信息
           category: {
             id: item.category.id.toString(),
             name: item.category.name

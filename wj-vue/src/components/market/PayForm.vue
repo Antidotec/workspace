@@ -37,13 +37,13 @@
             <span v-if="this.$store.state.user.vip">会员价</span>
             <span v-if="!this.$store.state.user.vip">价格</span>
             <span style="color: #ff0000">￥{{form.price}}</span>
-            <i v-if="this.$store.state.user.vip"> &nbsp;&nbsp; &nbsp;8折优惠</i>
+            <i v-if="this.$store.state.user.vip"> &nbsp;&nbsp; &nbsp;{{10-this.$store.state.user.vip}}折优惠</i>
           </el-card>
           <el-card v-if="!onSale" style="text-align: left">
             <span v-if="this.$store.state.user.vip">到手会员价</span>
             <span v-if="!this.$store.state.user.vip">到手价</span>
             <span style="color: #ff0000">￥{{form.price}}</span>
-            <i v-if="this.$store.state.user.vip"> &nbsp;&nbsp; &nbsp;8折优惠</i>
+            <i v-if="this.$store.state.user.vip"> &nbsp;&nbsp; &nbsp;{{10-this.$store.state.user.vip}}折优惠</i>
           </el-card>
           <el-card v-if="!onSale" style="text-align: left;margin-top: 10px">
             <span>定金</span>

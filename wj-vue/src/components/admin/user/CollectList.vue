@@ -21,21 +21,21 @@
           prop="id"
           label="id"
           sortable
-          width="80">
+          fit>
         </el-table-column>
         <el-table-column
           prop="uid"
           label="用户id"
-          width="100">
+          fit>
         </el-table-column>
         <el-table-column
           prop="username"
           label="用户名"
-          width="100">
+          fit>
         </el-table-column>
         <el-table-column
           label="封面"
-          width="100">
+          fit>
           <template slot-scope="scope">
             <img :src="scope.row.cover" style="width: 50px;height: 50px"/>
           </template>
@@ -43,7 +43,7 @@
         <el-table-column
           prop="title"
           label="标题"
-          width="100">
+          fit>
         </el-table-column>
         <el-table-column
           width="100"

@@ -20,8 +20,8 @@
         <el-form-item label="邮箱" :label-width="formLabelWidth" prop="name">
           <el-input v-model="form.email" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item prop="id" style="height: 0">
-          <el-input type="hidden" v-model="form.id" autocomplete="off"></el-input>
+        <el-form-item label="会员等级" :label-width="formLabelWidth" prop="vip">
+          <el-input-number v-model="form.vip" :min="0" :max="5" label="选择会员等级"></el-input-number>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

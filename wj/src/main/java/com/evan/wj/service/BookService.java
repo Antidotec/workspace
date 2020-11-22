@@ -43,11 +43,16 @@ public class BookService {
         return filter(books, index);
     }
 
+    public List<Book> adminSearch(String keywords) {
+        return bookDAO.findAllByTitleLikeOrAuthorLike('%' + keywords + '%', '%' + keywords + '%');
+    }
+
     public Book getBook(int id) {
         return bookDAO.findBookById(id);
     }
 
     public List<Book> filter(List<Book> books, int index) {
+        books.removeIf(Book::isUnshelve);
         if (index == 0)
             books.removeIf(Book::isSale);
         else if (index == 1)
@@ -65,8 +70,25 @@ public class BookService {
 
     public void bookOnSale(int bid){
         Book book = bookDAO.findBookById(bid);
-        System.out.println(book.getTitle());
         book.setSale(true);
+        bookDAO.save(book);
+    }
+
+    public void unshelveBook(int id) {
+        Book book = bookDAO.findBookById(id);
+        book.setUnshelve(true);
+        bookDAO.save(book);
+    }
+
+    public void preSellBook(int id) {
+        Book book = bookDAO.findBookById(id);
+        book.setSale(false);
+        bookDAO.save(book);
+    }
+
+    public void shelveBook(int id) {
+        Book book = bookDAO.findBookById(id);
+        book.setUnshelve(false);
         bookDAO.save(book);
     }
 }

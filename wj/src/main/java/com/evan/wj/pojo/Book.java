@@ -25,6 +25,7 @@ public class Book {
     String abs;
     double price;
     boolean sale;
+    boolean unshelve;
 
     public double getPrice() {
         return price;
@@ -104,6 +105,14 @@ public class Book {
 
     public void setSale(boolean sale) {
         this.sale = sale;
+    }
+
+    public boolean isUnshelve() {
+        return unshelve;
+    }
+
+    public void setUnshelve(boolean unshelve) {
+        this.unshelve = unshelve;
     }
 }
 

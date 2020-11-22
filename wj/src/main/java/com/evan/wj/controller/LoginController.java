@@ -41,5 +41,12 @@ public class LoginController {
     public void userRegister(@RequestBody User user) {
         userService.register(user);
     }
+
+    @CrossOrigin
+    @PostMapping(value = "api/adminRegister")
+    @ResponseBody
+    public void adminRegister(@RequestBody AdminUser user) {
+        adminUserService.register(user);
+    }
 }
 

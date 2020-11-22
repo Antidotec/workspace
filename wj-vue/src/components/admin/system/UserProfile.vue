@@ -7,7 +7,7 @@
         <el-form-item label="用户名" label-width="120px" prop="username">
           <label>{{selectedUser.username}}</label>
         </el-form-item>
-        <el-form-item label="真实姓名" label-width="120px" prop="name">
+        <el-form-item label="昵称" label-width="120px" prop="name">
           <el-input v-model="selectedUser.name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="手机号" label-width="120px" prop="phone">
@@ -37,7 +37,18 @@
         <el-breadcrumb-item>用户信息</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
-    <bulk-registration @onSubmit="listUsers()"></bulk-registration>
+    <div style=" text-align:left;margin-top: 20px">
+      <bulk-registration @onSubmit="listUsers()"></bulk-registration>
+      <el-input
+        @keyup.enter.native="searchClick"
+        placeholder="通过用户名搜索..."
+        prefix-icon="el-icon-search"
+        size="small"
+        style="width: 400px;margin-right: 10px;margin-top: 20px;margin-left: 10px"
+        v-model="keywords">
+      </el-input>
+      <el-button size="small" type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
+    </div>
     <el-card style="margin: 18px 2%;width: 95%">
       <el-table
         :data="users"
@@ -76,19 +87,6 @@
           fit>
         </el-table-column>
         <el-table-column
-          label="状态"
-          sortable
-          width="100">
-          <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.enabled"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="(value) => commitStatusChange(value, scope.row)">
-            </el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column
           label="操作"
           width="120">
           <template slot-scope="scope">
@@ -99,6 +97,7 @@
               编辑
             </el-button>
             <el-button
+              @click="deleteUser(scope.row)"
               type="text"
               size="small">
               移除
@@ -106,10 +105,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin: 20px 0 20px 0;float: left">
-        <el-button>取消选择</el-button>
-        <el-button>批量删除</el-button>
-      </div>
     </el-card>
   </div>
 </template>
@@ -126,7 +121,8 @@
         roles: [],
         dialogFormVisible: false,
         selectedUser: [],
-        selectedRolesIds: []
+        selectedRolesIds: [],
+        keywords: ''
       }
     },
     mounted() {
@@ -200,6 +196,15 @@
           }
         })
       },
+      deleteUser(user) {
+        console.log(user.id)
+        this.$axios.post("/admin/deleteUser?id=" + user.id).then(resp => {
+          if (resp && resp.status === 200) {
+            this.$alert("删除成功!")
+            this.listUsers()
+          }
+        })
+      },
       editUser(user) {
         this.dialogFormVisible = true
         this.selectedUser = user
@@ -215,6 +220,13 @@
         }).then(resp => {
           if (resp && resp.status === 200) {
             this.$alert('密码已重置为 123')
+          }
+        })
+      },
+      searchClick() {
+        this.$axios.get('admin/system/search?keywords=' + this.keywords).then(resp => {
+          if (resp && resp.status === 200) {
+            this.users = resp.data
           }
         })
       }

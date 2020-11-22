@@ -1,6 +1,7 @@
 package com.evan.wj.service;
 
 import com.evan.wj.dao.UserDAO;
+import com.evan.wj.pojo.AdminUser;
 import com.evan.wj.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Transient;
@@ -12,6 +13,10 @@ import java.util.List;
 public class UserService {
     @Autowired
     UserDAO userDAO;
+
+    public List<User> search(String keywords) {
+        return userDAO.findAllByUsernameLike(keywords);
+    }
 
     public boolean isExist(String username) {
         User user = getByName(username);
@@ -30,9 +35,9 @@ public class UserService {
         userDAO.save(user);
     }
 
-    public void becomeVip(int id) {
+    public void becomeVip(int id,int vip) {
         User user = userDAO.findUserById(id);
-        user.setVip(true);
+        user.setVip(vip);
         userDAO.save(user);
     }
 

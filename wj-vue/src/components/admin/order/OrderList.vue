@@ -7,6 +7,17 @@
         <el-breadcrumb-item>订单列表</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
+    <div align="left" style="margin-top: 20px">
+      <el-input
+        @keyup.enter.native="searchClick"
+        placeholder="通过图书id或者用户id搜索..."
+        prefix-icon="el-icon-search"
+        size="small"
+        style="width: 400px;margin-right: 10px"
+        v-model="keywords">
+      </el-input>
+      <el-button size="small" type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
+    </div>
     <el-card style="margin-top: 20px">
       <el-table
         :data="orders"
@@ -96,6 +107,7 @@
     data() {
       return {
         orders: [],
+        keywords:''
       }
     },
     mounted() {
@@ -135,7 +147,7 @@
           type: 'warning'
         }).then(() => {
             this.$axios
-              .post('/delOrder', {id: item.id}).then(resp => {
+              .post('/delOrder?id='+item.id).then(resp => {
               if (resp && resp.status === 200) {
                 this.loadOrders() //删除之后重新加载书籍
               }
@@ -149,6 +161,14 @@
         })
         // alert(id)
       },
+      searchClick(){
+        this.$axios
+          .get('/admin/order/search?keywords=' + this.keywords).then(resp => {
+          if (resp && resp.status === 200) {
+            this.orders = resp.data
+          }
+        })
+      }
     }
   }
 

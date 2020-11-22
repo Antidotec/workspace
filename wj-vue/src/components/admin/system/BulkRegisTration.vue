@@ -1,6 +1,6 @@
 <template>
   <div style="text-align: left">
-    <el-button class="add-button" type="success" @click="dialogFormVisible = true">批量添加用户</el-button>
+    <el-button class="add-button" type="success" @click="dialogFormVisible = true">添加用户</el-button>
     <el-dialog
       title="添加用户"
       :visible.sync="dialogFormVisible"
@@ -18,7 +18,7 @@
         </el-form-item>
         <el-form-item>
           <el-input type="text" v-model="loginForm.name"
-                    auto-complete="off" placeholder="真实姓名"></el-input>
+                    auto-complete="off" placeholder="昵称"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input type="text" v-model="loginForm.phone"
@@ -67,7 +67,7 @@
       },
       register () {
         this.$axios
-          .post('/register', {
+          .post('/adminRegister', {
             username: this.loginForm.username,
             password: this.loginForm.password,
             name: this.loginForm.name,
@@ -75,19 +75,14 @@
             email: this.loginForm.email
           })
           .then(resp => {
-            if (resp.data.code === 200) {
+            if (resp&&resp.status=== 200) {
               this.$alert('注册成功', '提示', {
                 confirmButtonText: '确定'
               })
               this.clear()
               this.$emit('onSubmit')
-            } else {
-              this.$alert(resp.data.message, '提示', {
-                confirmButtonText: '确定'
-              })
             }
           })
-          .catch(failResponse => {})
       }
     }
   }

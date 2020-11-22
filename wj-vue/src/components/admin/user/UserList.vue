@@ -7,6 +7,17 @@
         <el-breadcrumb-item>用户列表</el-breadcrumb-item>
       </el-breadcrumb>
     </el-row>
+    <div align="left" style="margin-top: 20px">
+      <el-input
+        @keyup.enter.native="searchClick"
+        placeholder="通过用户名搜索..."
+        prefix-icon="el-icon-search"
+        size="small"
+        style="width: 400px;margin-right: 10px;"
+        v-model="keywords">
+      </el-input>
+      <el-button size="small" type="primary" icon="el-icon-search" @click="searchClick">搜索</el-button>
+    </div>
     <el-card style="margin-top: 20px">
       <el-table
         :data="users"
@@ -26,27 +37,32 @@
         <el-table-column
           prop="username"
           label="用户名"
-          width="100">
+          fit>
         </el-table-column>
         <el-table-column
           prop="password"
           label="密码"
-          width="100">
+          fit>
         </el-table-column>
         <el-table-column
           prop="name"
           label="昵称"
-          width="100">
+          fit>
         </el-table-column>
         <el-table-column
           prop="phone"
           label="电话"
-          width="150">
+          fit>
         </el-table-column>
         <el-table-column
           prop="email"
           label="邮箱"
-          width="180">
+          fit>
+        </el-table-column>
+        <el-table-column
+          prop="vip"
+          label="会员等级"
+          fit>
         </el-table-column>
         <el-table-column
           width="150"
@@ -77,7 +93,11 @@
     components: {EditForm},
     data() {
       return {
+        dialogFormVisible: false,
         users: [],
+        keywords: '',
+        vipDegree: 0,
+        selectItem: ''
       }
     },
     mounted() {
@@ -109,13 +129,20 @@
         this.$axios.post("/delUser?id=" + user.id).then(resp => {
           if (resp && resp.status === 200) {
             that.$message({
-              type:"success",
-              message:"删除成功"
+              type: "success",
+              message: "删除成功"
             })
             that.loadUsers();
           }
         })
       },
+      searchClick() {
+        this.$axios.get('admin/user/search?keywords=' + this.keywords).then(resp => {
+          if (resp && resp.status === 200) {
+            this.users = resp.data
+          }
+        })
+      }
     }
   }
 </script>

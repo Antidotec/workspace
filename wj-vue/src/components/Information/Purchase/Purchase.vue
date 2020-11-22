@@ -114,7 +114,7 @@
               date: book.date,
               press: book.press,
               abs: book.abs,
-              price: this.$store.state.user.vip ? (item.price * 0.8).toFixed(2) : item.price, //这里直接处理单价信息
+              price: item.price, //这里直接用订单的单价就行了
               category: {
                 id: book.category.id.toString(),
                 name: book.category.name

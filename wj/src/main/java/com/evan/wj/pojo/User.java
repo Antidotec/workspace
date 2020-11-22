@@ -20,7 +20,7 @@ public class User {
     String phone;
     String email;
     boolean enabled;
-    boolean vip;
+    int vip;
 
     public int getId() {
         return id;
@@ -71,11 +71,11 @@ public class User {
         this.email = email;
     }
 
-    public boolean isVip() {
+    public int getVip() {
         return vip;
     }
 
-    public void setVip(boolean vip) {
+    public void setVip(int vip) {
         this.vip = vip;
     }
 

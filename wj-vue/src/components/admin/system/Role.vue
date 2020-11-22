@@ -63,18 +63,18 @@
           label="角色描述"
           fit>
         </el-table-column>
-        <el-table-column
-          label="状态"
-          width="100">
-          <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.enabled"
-              active-color="#13ce66"
-              inactive-color="#ff4949"
-              @change="(value) => commitStatusChange(value, scope.row)">
-            </el-switch>
-          </template>
-        </el-table-column>
+<!--        <el-table-column-->
+<!--          label="状态"-->
+<!--          width="100">-->
+<!--          <template slot-scope="scope">-->
+<!--            <el-switch-->
+<!--              v-model="scope.row.enabled"-->
+<!--              active-color="#13ce66"-->
+<!--              inactive-color="#ff4949"-->
+<!--              @change="(value) => commitStatusChange(value, scope.row)">-->
+<!--            </el-switch>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
         <el-table-column
           label="操作"
           width="120">

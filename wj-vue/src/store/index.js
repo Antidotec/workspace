@@ -27,10 +27,6 @@ export default new Vuex.Store({
       state.adminUser = adminUser;
       window.sessionStorage.setItem('adminUser', JSON.stringify(adminUser))
     },
-    becomeVip(state) {
-      state.user.vip = 1;
-      window.sessionStorage.setItem('user', JSON.stringify(state.user))
-    },
     initAdminMenu(state, menus) {
       state.adminMenus = menus
     },
@@ -45,6 +41,10 @@ export default new Vuex.Store({
       state.user.id = '';
       state.user.vip='';
       window.sessionStorage.removeItem('user')
+    },
+    vipChange(state,vip){
+      state.user.vip = vip;
+      window.sessionStorage.setItem('user', JSON.stringify(state.user))
     }
   }
 })

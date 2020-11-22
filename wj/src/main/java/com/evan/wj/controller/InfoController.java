@@ -44,8 +44,8 @@ public class InfoController {
 
     @CrossOrigin
     @PostMapping("/api/becomeVip")
-    public void becomeVip(@RequestParam("id") int id) throws Exception {
-        userService.becomeVip(id);
+    public void becomeVip(@RequestParam("id") int id,@RequestParam("degree") int vip) throws Exception {
+        userService.becomeVip(id,vip);
     }
 
     @CrossOrigin
